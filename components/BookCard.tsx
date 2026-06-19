@@ -19,7 +19,7 @@ export default function BookCard({ book }: { book: Book }) {
       </div>
       <h3 className="mt-2 text-sm font-medium line-clamp-1">{book.title}</h3>
       <p className="text-xs text-zinc-500">{book.author}</p>
-      <p className="mt-1 text-sm font-semibold">${book.price.toFixed(2)}</p>
+      <p className="mt-1 text-sm text-black font-semibold">${book.price.toFixed(2)}</p>
     </Link>
   );
 }

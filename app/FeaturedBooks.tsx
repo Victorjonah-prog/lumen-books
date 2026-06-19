@@ -1,6 +1,6 @@
 // components/FeaturedBooks.tsx
 import { getFeaturedBooks } from "@/lib/data";
-import BookCard from "./BookCard";
+import BookCard from "../components/BookCard";
 import Link from "next/link";
 
 export default async function FeaturedBooks() {
