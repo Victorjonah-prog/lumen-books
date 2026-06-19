@@ -46,7 +46,7 @@ export default function Nav() {
 
        
         <div className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-xs font-medium text-zinc-500">
-          SB
+          K9
         </div>
       </nav>
     </header>
