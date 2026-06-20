@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export default function Footer() {
+    const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "Lumen Books";
   return (
     <footer className="bg-zinc-950 text-zinc-400 mt-auto">
       <div className="mx-auto max-w-6xl px-6 pt-16 pb-12">
@@ -10,7 +11,7 @@ export default function Footer() {
             <div className="w-8 h-8 bg-amber-600 rounded-2xl flex items-center justify-center">
               <span className="text-white text-xl font-serif font-bold">L</span>
             </div>
-            <span className="font-serif text-2xl text-white tracking-tight">Lumen Books</span>
+            <span className="font-serif text-2xl text-white tracking-tight">{siteName}</span>
           </div>
 
           
@@ -22,7 +23,7 @@ export default function Footer() {
           </nav>
 
           <div className="text-xs text-zinc-500 text-center md:text-right">
-            © {new Date().getFullYear()} Lumen Books<br />
+            © {new Date().getFullYear()} {siteName} <br />
             Curated Literature • Built with care
           </div>
         </div>
