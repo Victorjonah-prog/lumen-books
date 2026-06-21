@@ -1,8 +1,11 @@
+import { cookies } from "next/headers";
 import { getBooksBySeller } from "@/lib/data";
 import BookCard from "@/components/BookCard";
 import Link from "next/link";
 
 export default async function DashboardPage() {
+  await cookies(); 
+
   const sellerId = "demo-seller-1";
   const books = await getBooksBySeller(sellerId);
 
@@ -22,7 +25,6 @@ export default async function DashboardPage() {
           + Add New Book
         </Link>
       </div>
-
       {books.length === 0 ? (
         <p className="text-zinc-500 py-12 text-center">
           You haven&apos;t listed any books yet.
