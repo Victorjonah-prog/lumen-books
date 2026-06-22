@@ -7,13 +7,13 @@ export type Book = {
   description: string;
   coverImageUrl: string;
   category: string;
-  createdAt: string; // ISO date string
+  createdAt: string; 
   ratingsCount: number;
   featured: boolean;
   sellerId: string;
 };
 
-// In-memory "database" — resets on server restart, which is fine for this assessment.
+
 const books: Book[] = [
   {
     id: "1",

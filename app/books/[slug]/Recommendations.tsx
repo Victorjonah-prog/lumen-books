@@ -1,9 +1,7 @@
 import { getAllBooks } from "@/lib/data";
 import BookCard from "@/components/BookCard";
 
-// Extra artificial delay on top of getAllBooks' own delay, to make the
-// streaming effect clearly visible — this section should noticeably lag
-// behind the rest of the page.
+
 async function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

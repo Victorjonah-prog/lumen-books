@@ -12,15 +12,12 @@ export async function generateStaticParams() {
   return books.map((book) => ({ slug: book.slug }));
 }
 
-// ISR fallback: if a slug wasn't pre-built (e.g. added after build), render it on first request
-// and Next.js will cache the result afterward.
 export const revalidate = 3600;
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-// Dynamic metadata: each book gets its own <title> and OG tags
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const book = await getBookBySlug(slug);
