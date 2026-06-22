@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lumen Books
 
-## Getting Started
+A small online bookstore with a seller dashboard, built with Next.js 16 App Router.
 
-First, run the development server:
+## How to run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repo
+2. Run `npm install`
+3. Run `npm run dev`
+4. Visit http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Seller login: seller@lumenbooks.test / password123
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Rendering table
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Route: /
+Mode: Static + ISR
+Why: Featured books are the same for every visitor, refreshed every hour automatically.
 
-## Learn More
+Route: /books
+Mode: SSR
+Why: Reads the URL for category and sort filters. Different URL means different result, so it must render fresh every request.
 
-To learn more about Next.js, take a look at the following resources:
+Route: /books/[slug]
+Mode: SSG + ISR fallback
+Why: All known book pages are pre-built at deploy time. New books added later render on their first visit.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Route: /login
+Mode: Static
+Why: Just a form. The actual login logic runs in a Server Action when the form is submitted.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Route: /dashboard
+Mode: SSR
+Why: Reads the login cookie to show this seller's books. Must render fresh per request.
 
-## Deploy on Vercel
+Route: /dashboard/new
+Mode: Static
+Why: Just a form. The mutation runs in a Server Action when submitted.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Route: /api/books
+Mode: Dynamic
+Why: Returns live JSON for the live search box.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Build output
+
+next build showed:
+
+/ is Static with ISR revalidating every 1 hour
+/books is Dynamic, server-rendered on every request
+/books/[slug] is SSG, pre-rendered for all 10 known book slugs
+/dashboard is Dynamic, server-rendered on every request
+/dashboard/new is Static
+/login is Static
+/api/books is Dynamic
+
+Legend:
+Static means prerendered as static content
+SSG means prerendered with generateStaticParams
+Dynamic means server-rendered on demand
+
+## Bonus items
+
+None attempted. Focused on getting the core requirements working correctly.
+
+## Trade-off
+
+For the category and sort filters on the books page, I used a plain HTML form instead of JavaScript. When the user clicks Apply, the browser updates the URL and the server re-renders the page with the new filters. This keeps the whole page a Server Component with no client-side code needed for filtering. The downside is a full page reload on every filter change, but it cleanly proves that SSR is driven by the URL search params, which is exactly what this route is meant to demonstrate.
